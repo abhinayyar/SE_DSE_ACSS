@@ -8,10 +8,11 @@ Rails.application.routes.draw do
 		resources :enrollments 
 	end
 
-
+  resources :years do
 	resources :judges do
 		resources :competitions_judges
 	end
+end
 
 	
 	

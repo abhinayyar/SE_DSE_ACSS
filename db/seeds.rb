@@ -21,7 +21,9 @@ participants = [{:p_name => 'Anavil', :p_loc => 'India', :p_phone => 2009121230,
 judges = [{:j_name => 'Judge Abhi', :j_loc => 'Texas', :j_phone => 9329101230, :j_email => 'judge@judge.com', :j_des => 'super judge for seed', :password => 'judgepass'}]
 users = [{:email_id => "admin@admin.com", :password_digest => "adminpass", :is_admin => 1},{:email_id => "judge@judge.com", :password_digest => "judgepass", :is_admin => 0}]
 
-
+years = [{:year_no => 2015},
+		 {:year_no => 2016},
+		 {:year_no => 2017}]
 competitions.each do |competition|
 	Competition.create!(competition)
 
@@ -47,4 +49,8 @@ end
 
 judges.each do |judge|
 	Judge.create!(judge)
+end
+
+years.each do |year|
+	Year.create!(year)
 end

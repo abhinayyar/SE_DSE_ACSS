@@ -9,8 +9,8 @@ def check_authentication
 
 end
 	def index
-		@judges = Judge.all
-		@judges = Judge.all.limit(params[:display_items])
+		@judges = Judge.where("year_id"=>params[:year_id])
+		@judges = Judge.where("year_id"=>params[:year_id]).limit(params[:display_items])
 	  @location_names = Judge.uniq.pluck(:j_loc)
     @judge_count=Judge.count
 	  if(params[:filter_by_location] != nil)
@@ -41,9 +41,9 @@ end
 #   redirect_to judge_path(@judge)
 #   else
 
-#      render 'new'
-#    end
-	else
+    if user.save
+    redirect_to year_judge_path(params[:year_id],@judge)
+    else
 
        render 'new'
     end
@@ -63,7 +63,7 @@ def show
 
 	def judge_params
 
-        params.require(:judge).permit(:j_name, :j_loc, :j_phone, :j_email, :j_des, :password)
+        params.require(:judge).permit(:j_name, :j_loc, :j_phone, :j_email, :j_des, :password, :year_id)
 	end
 
   def edit
@@ -74,15 +74,17 @@ def show
   	@judge = Judge.find params[:id]
     old_email = @judge.j_email
     puts old_email
-  	if @judge.update_attributes!(params[:judge].permit(:j_name, :j_loc, :j_phone, :j_email, :j_des, :password))
+  	if @judge.update_attributes!(params[:judge].permit(:j_name, :j_loc, :j_phone, :j_email, :j_des, :password,:year_id))
   	flash[:notice] = "#{@judge.j_name} successfully updated."
-  	redirect_to judge_path(@judge)
+
     
     user = User.where("email_id" => old_email).first
     #puts "adsfdslafkjal", user
     user.update_attributes!({:email_id => params[:judge][:j_email], :password => params[:judge][:password], :is_admin => 0})
     
     #user.password_digest = user.encrypt(user)
+
+  	redirect_to year_judge_path(params[:year_id],@judge)
 
     else
     render 'edit'

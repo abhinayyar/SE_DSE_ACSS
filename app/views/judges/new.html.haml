@@ -17,7 +17,7 @@
 			Value
 		%li
 			= link_to 'Logout', welcome_destroy_path, :method => :delete, class: 'setting_dropdown'
-= form_tag judges_path do
+= form_tag year_judges_path do
 	%div.absolute 
 		-@judge.errors.each do |attr, msg| 
 			%p		

@@ -17,7 +17,7 @@
 			Value
 		%li
 			= link_to 'Logout', welcome_destroy_path, :method => :delete, class: 'setting_dropdown'
-= form_tag judge_path(@judge), :method => :put do
+= form_tag year_judge_path(params[:year_id],@judge), :method => :put do
 	%div.absolute 
 		- val= Judge.where("id"=>params[:id])
 		%strong *Edit #{val[0].j_name} information :

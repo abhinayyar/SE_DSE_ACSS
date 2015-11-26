@@ -13,7 +13,7 @@ end
 
 
 	def competitions_judges_params
-	params.permit(:competition_id, :judge_id)
+	params.permit(:competition_id, :judge_id, :year_id)
 	end
 
 
@@ -39,12 +39,12 @@ def create
 	#render plain: params[:arr_comp].inspect
 	cj_params=Hash.new
 	cj_params[:judge_id]=params[:judge_id]
+	cj_params[:year_id]=params[:year_id]
 	old_cj = CompetitionsJudge.where("judge_id" => cj_params[:judge_id])
   old_cj.delete_all
   puts params[:arr_comp]
   if params[:arr_comp] != nil
     params[:arr_comp].each do |selected_competition_id|
-      puts "inside"
       cj_params[:competition_id] = selected_competition_id
       @cj = CompetitionsJudge.new(cj_params)
       @cj.save
@@ -52,7 +52,7 @@ def create
   end
   	judge = Judge.find cj_params[:judge_id]
 	flash[:notice] = "Judge #{judge.j_name}'s competitions were successfully changed"
-	redirect_to judges_path
+	redirect_to year_judges_path
 
 end
 def edit

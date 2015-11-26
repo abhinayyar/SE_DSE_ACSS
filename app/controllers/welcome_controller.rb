@@ -23,6 +23,7 @@ class WelcomeController < ApplicationController
 		        session[:user_id] = judge.id
 		      end
 		      redirect_to competitions_path
+		      #redirect_to years_path
 		else
 	
 		      flash[:notice] = "Invalid email/password combination"
