@@ -87,7 +87,8 @@ def show
   	redirect_to year_judge_path(params[:year_id],@judge)
 
     else
-    render 'edit'
+      render 'edit'
+    end
   end
 end
 end
