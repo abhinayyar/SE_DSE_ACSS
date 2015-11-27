@@ -23,7 +23,9 @@ users = [{:email_id => "admin@admin.com", :password_digest => "adminpass", :is_a
 
 years = [{:year_no => 2015},
 		 {:year_no => 2016},
-		 {:year_no => 2017}]
+		 {:year_no => 2017},
+		 {:year_no => 2018},
+		 {:year_no => 2019}]
 competitions.each do |competition|
 	Competition.create!(competition)
 

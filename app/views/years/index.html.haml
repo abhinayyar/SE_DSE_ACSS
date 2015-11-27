@@ -14,11 +14,30 @@
 			%li
 				= link_to 'Logout', welcome_destroy_path, :method => :delete, class: 'setting_dropdown'
 	%div.list
-		%strong.til Select Year :
+		%strong.year Select competition year :
 		%p
 	
 		- y = Year.all
 		- y.each do |p|
-			= link_to p.year_no, year_competitions_path(p.id)
-			%p
+			= #link_to p.year_no, year_competitions_path(p.id)
+			
+		%ul.navigation
+			%a.main{:href => "#url"} Competition Years
+			%li.n1
+				- id_year = Year.where("year_no"=>2015).uniq.pluck(:id)
+				%a{:href => year_competitions_path(:year_id=>id_year)} 2015
+			%li.n2
+				- id_year = Year.where("year_no"=>2016).uniq.pluck(:id)
+				%a{:href => year_competitions_path(:year_id=>id_year)} 2016
+			%li.n3
+				- id_year = Year.where("year_no"=>2017).uniq.pluck(:id)
+				%a{:href => year_competitions_path(:year_id=>id_year)} 2017
+			%li.n4
+				- id_year = Year.where("year_no"=>2018).uniq.pluck(:id)
+				%a{:href => year_competitions_path(:year_id=>id_year)} 2018
+			%li.n5
+				- id_year = Year.where("year_no"=>2019).uniq.pluck(:id)
+				%a{:href => year_competitions_path(:year_id=>id_year)} 2019
+  
+				
 - elsif session[:user_type] == 'judge'	
