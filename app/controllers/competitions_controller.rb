@@ -22,12 +22,14 @@ def index
 		end
 	else
 		@judge = Judge.where("id"=>session[:user_id],"year_id"=>params[:year_id])[0]
-		judge_comps = CompetitionsJudge.where("judge_id" => @judge.id)
-		comp_ids = Array.new
-		judge_comps.each do |j_c|
+		if @judge != nil
+			judge_comps = CompetitionsJudge.where("judge_id" => @judge.id)
+			comp_ids = Array.new
+			judge_comps.each do |j_c|
 			comp_ids.push(j_c.competition_id)
+			end
+			@competitions = Competition.where("id" => comp_ids)
 		end
-		@competitions = Competition.where("id" => comp_ids)
 		
 	end
 end	

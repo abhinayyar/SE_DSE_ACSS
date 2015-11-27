@@ -47,4 +47,4 @@
 		%h2.part Select Contestant
 		- @qualifications.each do |qualification| 
 			.judgebox 
-				= link_to qualification.participant_number, new_competition_round_qualification_score_path(params[:competition_id],params[:round_id], qualification), class: 'menuitemjudge'
+				= link_to qualification.participant_number, new_year_competition_round_qualification_score_path(params[:year_id],params[:competition_id],params[:round_id], qualification), class: 'menuitemjudge'

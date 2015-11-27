@@ -50,16 +50,17 @@ class ScoresController < ApplicationController
 			score_params[:question_comment] = question_comments[question.id.to_s]
 			
 			score=Score.new(score_params)
+			score[:year_id]=params[:year_id]
 			if score.save
 				i+=1
 			
 			else
-				redirect_to new_competition_round_qualification_score_path(params[:competition_id],params[:round_id],qualification) and return
+				redirect_to new_year_competition_round_qualification_score_path(params[:year_id],params[:competition_id],params[:round_id],qualification) and return
                         end
 		end
 		competition = params[:competition_id]
 		round = params[:round_id]
-		redirect_to new_competition_round_qualification_comment_path(params[:competition_id],params[:round_id], qualification) and return
+		redirect_to new_year_competition_round_qualification_comment_path(params[:year_id],params[:competition_id],params[:round_id], qualification) and return
 		
 	end
 	

@@ -15,12 +15,13 @@ class CommentsController < ApplicationController
 
 		comment_params[:comment_des] = params[:comment][:comment_des]
 		comment = Comment.new(comment_params)
+		comment[:year_id]=params[:year_id]
 		comment.save
 		
 		competition = params[:competition_id]
 		round = params[:round_id]
 		
-		redirect_to competition_round_qualifications_path(competition, round)
+		redirect_to year_competition_round_qualifications_path(params[:year_id],competition, round)
 #
 #		q_params = question_params	
 #		#q_params[:round_id] = params[:round_id]

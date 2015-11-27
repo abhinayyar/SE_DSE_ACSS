@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151127001542) do
+ActiveRecord::Schema.define(version: 20151127084724) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "participant_id"
     t.integer  "judge_id"
     t.integer  "round_id"
     t.string   "comment_des"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "year_id",        default: 1
   end
 
   create_table "competitions", force: :cascade do |t|
@@ -103,11 +104,12 @@ ActiveRecord::Schema.define(version: 20151127001542) do
     t.integer  "participant_id"
     t.integer  "judge_id"
     t.integer  "round_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "question_id"
     t.integer  "marks"
     t.string   "question_comment"
+    t.integer  "year_id",          default: 1
   end
 
   create_table "users", force: :cascade do |t|

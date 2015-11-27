@@ -55,9 +55,12 @@
  
 - elsif session[:user_type] == 'judge'		
   %judgebox 
-    %h2.analysis Welcome #{@judge.j_name}
-    - @competitions.each do |competition|
-      .judgebox 
-        = link_to competition.competition_name, year_competition_rounds_path(params[:year_id],competition), class: 'menuitemjudge'
+    - if @judge != nil
+      %h2.analysis Welcome #{@judge.j_name}
+      - @competitions.each do |competition|
+        .judgebox 
+          = link_to competition.competition_name, year_competition_rounds_path(params[:year_id],competition), class: 'menuitemjudge'
+    -else
+      %strong Sorry You are not entitled to Judge competition this year, contact Admin for help
 
   

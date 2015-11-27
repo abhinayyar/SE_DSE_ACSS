@@ -17,12 +17,15 @@ class WelcomeController < ApplicationController
 		  if user && user.authenticate(params[:cred][:password])
 		      if(user.is_admin==1)
 		        session[:user_type] = 'admin'
+		        redirect_to years_path
 		      else
 		        session[:user_type] = 'judge'
 		        judge = Judge.where(:j_email => params[:cred][:email_id].downcase).first
 		        session[:user_id] = judge.id
+		        year=Year.where("year_no"=>Time.now.year)
+		        redirect_to year_competitions_path(:year_id => year[0].id)
 		      end
-		      redirect_to years_path
+	
 		else
 	
 		      flash[:notice] = "Invalid email/password combination"
