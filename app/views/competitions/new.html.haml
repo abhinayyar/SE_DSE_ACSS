@@ -6,7 +6,7 @@
 		
 		
       	
-%a{:href => competitions_path}
+%a{:href => year_competitions_path(params[:year_id])}
 	= image_tag "home.png", class: 'home_button'
 .dropdown
 	%input.dropdown-toggle{:type => "text"}
@@ -18,7 +18,7 @@
 			Value
 		%li
 			= link_to 'Logout', welcome_destroy_path, :method => :delete, class: 'setting_dropdown'
-= form_tag competitions_path do
+= form_tag year_competitions_path(params[:year_id]) do
 	%div.absolute  
 		-@competition.errors.each do |attr, msg| 
 			%p		

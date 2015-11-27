@@ -5,13 +5,13 @@
 		= image_tag "logo.png", class: 'logo_button'
 	%ul
 		%li.current
-			= link_to "Questions", competition_round_questions_path(@competition,:round_id => params[:id]), class: 'menuitem'
+			= link_to "Questions", year_competition_round_questions_path(params[:year_id],@competition,:round_id => params[:id]), class: 'menuitem'
 		%li.current
-			= link_to 'Send to Next Round', new_competition_round_qualification_path(@competition, @round), class: 'menuitem'
+			= link_to 'Send to Next Round', new_year_competition_round_qualification_path(params[:year_id],@competition, @round), class: 'menuitem'
 		%li.current
-			= link_to "Qualified Participants", competition_round_qualifications_path(@competition, @round), class: 'menuitem'
+			= link_to "Qualified Participants", year_competition_round_qualifications_path(params[:year_id],@competition, @round), class: 'menuitem'
       	
-	%a{:href => competitions_path}
+	%a{:href => year_competitions_path(params[:year_id])}
 		= image_tag "home.png", class: 'home_button'
 	.dropdown
 		%input.dropdown-toggle{:type => "text"}
@@ -72,7 +72,7 @@
 			- pt = Qualification.where("round_id"=> [params[:id]])
 			- participant_count = pt.count
 			- (1..participant_count).step(1) do |i|
-				%option{:value => competition_round_path(params[:competition_id],params[:id],:display_items => i)} #{i}
+				%option{:value => year_competition_round_path(params[:year_id],params[:competition_id],params[:id],:display_items => i)} #{i}
 		
 		%table
 			%thead

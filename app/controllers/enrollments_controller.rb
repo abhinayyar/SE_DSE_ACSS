@@ -9,8 +9,7 @@ def check_authentication
 
 end
 def enrollment_params
-	params.permit(:competition_id, :participant_id)
-	#params.require(:
+	params.permit(:competition_id, :participant_id, :year_id)
 end
 
 def index
@@ -93,12 +92,13 @@ def create
     params[:competition_id].each do |selected_competition_id|
       enroll_params[:competition_id] = selected_competition_id
       @enrollment = Enrollment.new(enroll_params)
+      @enrollment[:year_id]=params[:year_id]
       @enrollment.save
     end
   end
   participant = Participant.find enroll_params[:participant_id]
 	flash[:notice] = "Participant #{participant.p_name}'s competitions were successfully changed"
-	redirect_to participants_path(@competition)
+	redirect_to year_participants_path(params[:year_id],@competition)
 end
 
 def edit
@@ -107,9 +107,9 @@ end
 
 def update
 	@enrollment = Enrollment.find params[:id]
-	@enrollment.update_attributes!(params[:competition].permit(:competition_name, :competition_des, :no_of_rounds))
+	@enrollment.update_attributes!(params[:competition].permit(:competition_name, :competition_des, :no_of_rounds,:year_id))
 	flash[:notice] = "#{@enrollment.competition_name} successfully updated."
-	redirect_to enrollment_path(@competition)
+	redirect_to year_enrollment_path(params[:year_id],@competition)
 end
 
 def destroy
@@ -117,7 +117,7 @@ def destroy
 	#@enrollment = @competition
 	@enrollment.destroy
 	flash[:notice] = "Enrollment '#{@round.title}' successfuly deleted'"
-	redirect_to enrollments
+	redirect_to year_enrollments(params[:year_id])
 end
 
 private :enrollment_params

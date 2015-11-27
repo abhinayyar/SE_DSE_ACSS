@@ -6,14 +6,14 @@
     = image_tag "logo.png", class: 'logo_button'
     %ul
       %li.current
-        = link_to 'Add Competition', new_competition_path, class: 'menuitem'
+        = link_to 'Add Competition', new_year_competition_path(params[:year_id]), class: 'menuitem'
       %li.current
-        = link_to 'See All Participants', participants_path, class: 'menuitem' 
+        = link_to 'See All Participants', year_participants_path(params[:year_id]), class: 'menuitem' 
       %li.current
-        = link_to 'Judges', years_path, class: 'menuitem'
+        = link_to 'Judges', year_judges_path(params[:year_id]), class: 'menuitem'
 
 
-  %a{:href => competitions_path}
+  %a{:href => year_competitions_path(params[:year_id])}
     = image_tag "home.png", class: 'home_button'
   .dropdown
     %input.dropdown-toggle{:type => "text"}
@@ -29,14 +29,14 @@
     %select{:onchange => "window.location.href=this.value"}
       %option No of competition to display
       - (2..@competition_count).step(2) do |i|
-        %option{:value => competitions_path(:display_items => i)} #{i}
-      %option{:value => competitions_path(:display_items => @competition_count)} All
+        %option{:value => year_competitions_path(params[:year_id],:display_items => i)} #{i}
+      %option{:value => year_competitions_path(params[:year_id],:display_items => @competition_count)} All
     %table
       %thead
         %tr
           %th{:width=>"20"} Type
           %th{:width => "200"} 
-            = link_to 'Name', competitions_path(:sort => 'competition_name'), class: 'custome_menu'
+            = link_to 'Name', year_competitions_path(params[:year_id],:sort => 'competition_name'), class: 'custome_menu'
           %th{:width => "350"} Description
           %th{:width => "10"} Edit
           %th{:width => "10"} Delete
@@ -44,10 +44,10 @@
         - @competitions.each do |competition|
           %tr 
             %td.center{align: "center", :width => '10px'}= image_tag "comp.png", class: 'comp_button'
-            %td.center{align: "center"}= link_to competition.competition_name, competition_path(competition), class: 'custome_menu'
+            %td.center{align: "center"}= link_to competition.competition_name, year_competition_path(params[:year_id],competition), class: 'custome_menu'
             %td.center{align: "center"}= competition.competition_des
             %td.center{align: "center"}
-              %a{:href => edit_competition_path(:id => competition.id)}
+              %a{:href => edit_year_competition_path(params[:year_id],:id => competition.id)}
                 = image_tag "edit.png", class: 'edit_button'
             %td
               %a{:href => "#"}
@@ -58,6 +58,6 @@
     %h2.analysis Welcome #{@judge.j_name}
     - @competitions.each do |competition|
       .judgebox 
-        = link_to competition.competition_name, competition_rounds_path(competition), class: 'menuitemjudge'
+        = link_to competition.competition_name, year_competition_rounds_path(params[:year_id],competition), class: 'menuitemjudge'
 
   

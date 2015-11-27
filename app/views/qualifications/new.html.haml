@@ -6,7 +6,7 @@
 	%ul
 		
         
-%a{:href => competitions_path}
+%a{:href => year_competitions_path(params[:year_id])}
 	= image_tag "home.png", class: 'home_button'
 .dropdown
 	%input.dropdown-toggle{:type => "text"}
@@ -19,7 +19,7 @@
 		%li
 			= link_to 'Logout', welcome_destroy_path, :method => :delete, class: 'setting_dropdown'
 
-= form_tag competition_round_qualifications_path, :method => :post do
+= form_tag year_competition_round_qualifications_path, :method => :post do
 	%div.list
 		- val = Round.where("id"=>params[:round_id])
 		%strong.til Qualified participants of round : #{val[0].round_name}

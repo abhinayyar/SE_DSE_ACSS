@@ -4,10 +4,10 @@
 	= image_tag "logo.png", class: 'logo_button'
 	%ul
 		%li.current
-			= link_to 'Generate Report',participant_report_path(@participant), class: 'menuitem'
+			= link_to 'Generate Report',year_participant_report_path(params[:year_id],@participant), class: 'menuitem'
 
       	
-%a{:href => competitions_path}
+%a{:href => year_competitions_path(params[:year_id])}
 	= image_tag "home.png", class: 'home_button'
 .dropdown
 	%input.dropdown-toggle{:type => "text"}
@@ -54,11 +54,12 @@
 	%div.add_comp
 		%strong= "Add to relevant competitions :"
 		%p
-		= form_tag participant_enrollments_path, :method => :post do
-			- Competition.all.each do |competition|
+		= form_tag year_participant_enrollments_path, :method => :post do
+			- Competition.where("year_id"=>params[:year_id]).each do |competition|
 				= check_box_tag 'competition_id[]', competition.id, @selected_competition_ids[competition.id]
 				%strong #{competition.competition_name}
-			= submit_tag 'Submit'
+			%p
+			= submit_tag 'Submit', class: 'gen_submit2'
 	%p
 	%div.part_rel
 		%strong.score_head Summary
@@ -88,7 +89,7 @@
 					%tbody
 						- @questions[round.id].each do |question|
 							%tr 
-								%td.center{align: "center"}= link_to question.question_details, round_participant_question_scores_path(round, @participant,question), class: 'custome_menu'
+								%td.center{align: "center"}= link_to question.question_details, year_round_participant_question_scores_path(params[:year_id],round, @participant,question), class: 'custome_menu'
 								%td.center{align: "center"}= @scores[question.id]
 								%td.center{align: "center"}= @totalScores[question.id]
 			

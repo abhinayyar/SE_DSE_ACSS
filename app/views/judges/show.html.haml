@@ -8,7 +8,7 @@
 		%ul
 		
       	
-	%a{:href => competitions_path}
+	%a{:href => year_competitions_path(params[:year_id])}
 		= image_tag "home.png", class: 'home_button'
 	.dropdown
 		%input.dropdown-toggle{:type => "text"}
@@ -54,7 +54,7 @@
 		%strong= "Add relevant competitions : "
 		%p
 		= form_tag year_judge_competitions_judges_path(params[:year_id],params[:id]), :method => :post do
-			- Competition.all.each do |competition|
+			- Competition.where("year_id"=>params[:year_id]).each do |competition|
 				= check_box_tag "arr_comp[]", competition.id, @selected_competition_ids[competition.id], :id => "arr_comp_#{competition.competition_name}"
 				%strong= competition.competition_name
 			%p

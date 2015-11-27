@@ -5,9 +5,9 @@
 		= image_tag "logo.png", class: 'logo_button'
 		%ul
 			%li.current
-				= link_to 'Add Round', new_competition_round_path, class: 'menuitem'
+				= link_to 'Add Round', new_year_competition_round_path(params[:year_id],params[:competition_id]), class: 'menuitem'
       	
-	%a{:href => competitions_path}
+	%a{:href => year_competitions_path(params[:year_id])}
 		= image_tag "home.png", class: 'home_button'
 	.dropdown
 		%input.dropdown-toggle{:type => "text"}
@@ -39,15 +39,15 @@
 				%tr 
 					%td.center{align: "center"}
 						= image_tag "round.jpg", class: 'round_button'  
-					%td.center{align: "center"}= link_to round.round_name, competition_round_path(@competition, round), class: 'custome_menu'
+					%td.center{align: "center"}= link_to round.round_name, year_competition_round_path(params[:year_id],@competition, round), class: 'custome_menu'
 					%td.center{align: "center"}= round.round_des
 					- np = Qualification.where("round_id"=> round.id)
 					%td.center{align: "center"}= np.count
 					%td
-						%a{:href => edit_competition_round_path(params[:competition_id],round.id)}
+						%a{:href => edit_year_competition_round_path(params[:year_id],params[:competition_id],round.id)}
 							= image_tag "edit.png", class: 'round_edit' 
 					%td
-						%a{:href => competition_round_path(@competition,round.id),  method: :delete }
+						%a{:href => "#"}
 							= image_tag "delete.png", class: 'round_delete1' 						
 
 - elsif session[:user_type] == 'judge'
@@ -55,5 +55,5 @@
 		%h2.analysis Rounds
 		- @rounds.each do |round|
 			.judgebox 
-				= link_to round.round_name, competition_round_qualifications_path(@competition, round), class: 'menuitemjudge'
+				= link_to round.round_name, year_competition_round_qualifications_path(params[:year_id],@competition, round), class: 'menuitemjudge'
 	

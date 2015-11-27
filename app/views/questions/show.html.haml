@@ -5,7 +5,7 @@
 	%ul
 		
       	
-%a{:href => competitions_path}
+%a{:href => year_competitions_path(params[:year_id])}
 	= image_tag "home.png", class: 'home_button'
 .dropdown
 	%input.dropdown-toggle{:type => "text"}

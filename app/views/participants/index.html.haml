@@ -5,10 +5,10 @@
 	= image_tag "logo.png", class: 'logo_button'
 	%ul
 		%li.current
-			= link_to 'Add Participant', new_participant_path, class: 'menuitem'
+			= link_to 'Add Participant', new_year_participant_path(params[:year_id]), class: 'menuitem'
 		
       	
-%a{:href => competitions_path}
+%a{:href => year_competitions_path(params[:year_id])}
 	= image_tag "home.png", class: 'home_button'
 .dropdown
 	%input.dropdown-toggle{:type => "text"}/
@@ -24,18 +24,18 @@
 	%select{:onchange => "window.location.href=this.value"}
 		%option Filter by location
 		- @location_names.each do |loc|
-			%option{:value => participants_path(:filter_by_location => loc)} #{loc}
+			%option{:value => year_participants_path(params[:year_id],:filter_by_location => loc)} #{loc}
 	%select{:onchange => "window.location.href=this.value"}
 		%option No of Participants to display
 		- (1..@participant_count).step(2) do |i|
-			%option{:value => participants_path(:display_items => i)} #{i}
-		%option{:value => participants_path(:display_items => @participant_count)} All
+			%option{:value => year_participants_path(params[:year_id],:display_items => i)} #{i}
+		%option{:value => year_participants_path(params[:year_id],:display_items => @participant_count)} All
 	%table#participants
 		%thead
 			%tr
 				%th{:width=>"20"} Type
-				%th{:width=>"80"}= link_to 'Name', participants_path(:sort=> 'P_Name'), class: 'custome_menu'
-				%th{:width=>"40"}=link_to 'Location', participants_path(:sort=> 'p_loc'), class: 'custome_menu'
+				%th{:width=>"80"}= link_to 'Name', year_participants_path(params[:year_id],:sort=> 'P_Name'), class: 'custome_menu'
+				%th{:width=>"40"}=link_to 'Location', year_participants_path(params[:year_id],:sort=> 'p_loc'), class: 'custome_menu'
 				%th{:width=>"50"} Phone
 				%th{:width=>"200"} Email
 				%th{:width=>"100"} Description
@@ -48,13 +48,13 @@
 			%tr
 				%td
 					= image_tag "participant.jpg", class: 'part_button'  
-				%td= link_to participant.p_name, new_participant_enrollment_path(participant), class: 'custome_menu'
+				%td= link_to participant.p_name, new_year_participant_enrollment_path(params[:year_id],participant), class: 'custome_menu'
 				%td= participant.p_loc 
 				%td= participant.p_phone
 				%td= participant.p_email
 				%td= participant.p_des
 				%td
-					%a{:href => edit_participant_path(:id => participant.id)}
+					%a{:href => edit_year_participant_path(params[:year_id],:id => participant.id)}
 						= image_tag "edit.png", class: 'edit_button'  
 				%td
 					%a{:href => "#"}

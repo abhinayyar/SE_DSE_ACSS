@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126203409) do
+ActiveRecord::Schema.define(version: 20151127001542) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "participant_id"
@@ -25,9 +25,10 @@ ActiveRecord::Schema.define(version: 20151126203409) do
   create_table "competitions", force: :cascade do |t|
     t.string   "competition_name"
     t.text     "competition_des"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "no_of_rounds"
+    t.integer  "year_id",          default: 1
   end
 
   create_table "competitions_judges", id: false, force: :cascade do |t|
@@ -39,8 +40,9 @@ ActiveRecord::Schema.define(version: 20151126203409) do
   create_table "enrollments", force: :cascade do |t|
     t.integer  "participant_id"
     t.integer  "competition_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "year_id",        default: 1
   end
 
   create_table "judges", force: :cascade do |t|
@@ -62,26 +64,29 @@ ActiveRecord::Schema.define(version: 20151126203409) do
     t.string   "p_email"
     t.string   "p_des"
     t.integer  "round_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "password"
+    t.integer  "year_id",    default: 1
   end
 
   create_table "qualifications", force: :cascade do |t|
     t.integer  "participant_id"
     t.integer  "round_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "participant_number"
+    t.integer  "year_id",            default: 1
   end
 
   create_table "questions", force: :cascade do |t|
     t.string   "question_details"
     t.integer  "marks"
     t.integer  "round_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "question_detail"
+    t.integer  "year_id",          default: 1
   end
 
   create_table "rounds", force: :cascade do |t|
@@ -89,8 +94,9 @@ ActiveRecord::Schema.define(version: 20151126203409) do
     t.string   "round_name"
     t.text     "round_des"
     t.integer  "no_of_participants"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "year_id",            default: 1
   end
 
   create_table "scores", force: :cascade do |t|

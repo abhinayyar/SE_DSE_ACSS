@@ -6,13 +6,13 @@
 		= image_tag "logo.png", class: 'logo_button'
 		%ul
 			%li.current
-				= link_to "#{@competition.competition_name}'s Rounds", competition_rounds_path(@competition), class: 'menuitem'
+				= link_to "#{@competition.competition_name}'s Rounds", year_competition_rounds_path(params[:year_id],@competition), class: 'menuitem'
 			%li.current
-				= link_to 'Judges ', competition_competitions_judges_path(@competition), class: 'menuitem'
+				= link_to 'Judges ', year_competition_competitions_judges_path(params[:year_id],@competition), class: 'menuitem'
 			%li.current
-				= link_to 'Enrolled participants', competition_enrollments_path(@competition), class: 'menuitem'
+				= link_to 'Enrolled participants', year_competition_enrollments_path(params[:year_id],@competition), class: 'menuitem'
 			
-	%a{:href => competitions_path}
+	%a{:href => year_competitions_path(params[:year_id])}
 		= image_tag "home.png", class: 'home_button'
 	.dropdown
 		%input.dropdown-toggle{:type => "text"}

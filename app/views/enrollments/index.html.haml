@@ -1,12 +1,12 @@
 - flash.each do |key, value|
-	= content_tag :div, "*"+value, class: "flash_#{key}"
+  = content_tag :div, "*"+value, class: "flash_#{key}"
 %nav
   = image_tag "logo.png", class: 'logo_button'
   %ul
     %li.current
-      = link_to 'Add to First Round', competition_add_part_to_round_path(@competition), class: 'menuitem'
+      = link_to 'Add to First Round', year_competition_add_part_to_round_path(params[:year_id],@competition), class: 'menuitem'
         
-%a{:href => competitions_path}
+%a{:href => year_competitions_path(params[:year_id])}
   = image_tag "home.png", class: 'home_button'
 .dropdown
   %input.dropdown-toggle{:type => "text"}
@@ -26,8 +26,8 @@
     %thead
       %tr
         %th{:width=>"20"} Type
-        %th=link_to 'Name', competition_enrollments_path(:competition_id => params[:competition_id], :sort=> 'P_Name'), class: 'custome_menu'
-        %th=link_to 'Location', competition_enrollments_path(:competition_id => params[:competition_id], :sort=> 'p_loc'), class: 'custome_menu'
+        %th=link_to 'Name', year_competition_enrollments_path(params[:year_id],:competition_id => params[:competition_id], :sort=> 'P_Name'), class: 'custome_menu'
+        %th=link_to 'Location', year_competition_enrollments_path(params[:year_id],:competition_id => params[:competition_id], :sort=> 'p_loc'), class: 'custome_menu'
         %th Phone No
         %th Email
     %tbody

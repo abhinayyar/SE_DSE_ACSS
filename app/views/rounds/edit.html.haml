@@ -1,9 +1,25 @@
-%h1 Edit Round
 - flash.each do |key, value|
 	= content_tag :div, "*"+value, class: "flash_#{key}"
-
-= form_tag competition_round_path, :method => :put do
+%nav
+	= image_tag "logo.png", class: 'logo_button'
+	%ul
+		
+      	
+%a{:href => year_competitions_path(params[:year_id])}
+	= image_tag "home.png", class: 'home_button'
+.dropdown
+	%input.dropdown-toggle{:type => "text"}
+	.dropdown-text Account
+	%ul.dropdown-content
+		%li
+			= link_to 'Settings', class: 'setting_dropdown'
+		%li
+			Value
+		%li
+			= link_to 'Logout', welcome_destroy_path, :method => :delete, class: 'setting_dropdown'
+= form_tag year_competition_round_path, :method => :put do
 	%div.absolute 
+		%strong *Edit round info :
 		%p
 			= label :round, :round_name 
 			%p
@@ -12,24 +28,9 @@
 			= label :round, :round_des 
 			%p
 			= text_area :round, :round_des, class: 'enteries'
-		%p
-			= label :round, :no_of_participants
-			%p
-			= text_field :round, :no_of_participants, class: 'enteries'
 		%p  
 			= submit_tag 'Update Round Info', class: 'register'
 			
-%div.sidemenu
-	%section.sidebar
-		.block
-			.sidebar-header
-				Menu : Admin
-			%nav
-				%ul.sidebar-nav
-					%li
-						= link_to 'Home', competitions_path, class: 'menuitem'
-					%li
-						= link_to 'Back', competition_rounds_path, class: 'menuitem'
 
 
 

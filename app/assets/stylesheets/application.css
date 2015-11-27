@@ -493,6 +493,15 @@ strong.til
   color: white;
   font-size: 15px;
 }
+.gen_submit2
+{
+  background-color: black;
+  width: 100px;
+  height: 30px;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+}
 ul.judge_bar
 {
   width: 500px;

@@ -9,16 +9,16 @@ def check_authentication
 
 end
 def participant_params
-	params.require(:participant).permit(:p_name, :p_loc, :p_phone, :p_email, :p_des, :password)
+	params.require(:participant).permit(:p_name, :p_loc, :p_phone, :p_email, :p_des, :password,:year_id)
 end
 
 def index
-	@participant_count=Participant.count
-	@participants = Participant.all.limit(params[:display_items])
-	@location_names = Participant.uniq.pluck(:p_loc)
+  @participants = Participant.where("year_id"=>params[:year_id]).limit(params[:display_items])
+	@participant_count=@participants.count
+	@location_names = @participants.uniq.pluck(:p_loc)
 
 	if(params[:filter_by_location] != nil)
-		@participants=Participant.where("p_loc"=> params[:filter_by_location])
+		@participants=@participants.where("p_loc"=> params[:filter_by_location])
 	end
 	if(params[:sort].to_s == 'P_Name')
 			 @participants = @participants.sort_by{|p| p.p_name }
@@ -37,8 +37,9 @@ end
 
 def create
 	@participant = Participant.new(participant_params)
+  @participant[:year_id]=params[:year_id]
 	if @participant.save
-	  redirect_to new_participant_enrollment_path(@participant)
+	  redirect_to new_year_participant_enrollment_path(params[:year_id],@participant)
   else
           flash[:notice]="Enter correct values"
           render 'new'
@@ -59,14 +60,14 @@ def update
 	@participant = Participant.find params[:id]
 	@participant.update_attributes!(params[:participant].permit(:p_name, :p_loc, :p_phone, :p_email, :p_des))
 	flash[:notice] = "#{@participant.p_name} successfully updated."
-	redirect_to new_participant_enrollment_path(@participant)
+	redirect_to new_year_participant_enrollment_path(params[:year_id],@participant)
 end
 
 def destroy
 	@participant = Participant.find params[:id]
 	@participant.destroy
 	flash[:notice] = "Participant '#{@participant.p_name}' successfuly deleted'"
-	redirect_to participants_path
+	redirect_to year_participants_path(params[:year_id])
 end
 def report
 	@participant = Participant.find params[:participant_id]

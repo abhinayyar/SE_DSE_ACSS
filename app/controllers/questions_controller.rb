@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
 	before_filter :check_authentication
 
 	def question_params
-		params.require(:question).permit(:question_details, :marks)
+		params.require(:question).permit(:question_details, :marks, :year_id)
 	end
 
 	def check_authentication
@@ -29,10 +29,11 @@ class QuestionsController < ApplicationController
 	def create
 		q_params = question_params	
 		q_params[:round_id] = params[:round_id]
+		q_params[:year_id]=params[:year_id]
 		@question = Question.new(q_params)
 		@question.save
 		flash[:notice] = "Question added successfully"
-		redirect_to competition_round_questions_path
+		redirect_to year_competition_round_questions_path
 	
 	
 	end
@@ -50,6 +51,7 @@ class QuestionsController < ApplicationController
 	end
 
 	def update
+		
 	end
 
 	def destroy

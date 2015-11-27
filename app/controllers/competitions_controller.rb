@@ -10,18 +10,18 @@ def check_authentication
 end
 
 def competition_params
-	params.require(:competition).permit(:competition_name, :competition_des, :no_of_rounds)
+	params.require(:competition).permit(:competition_name, :competition_des, :no_of_rounds,:year_id)
 end
 
 def index
 	if session[:user_type] == 'admin'
-		@competition_count=Competition.count
-		@competitions = Competition.all.limit(params[:display_items])
+		@competitions = Competition.where("year_id"=>params[:year_id]).limit(params[:display_items])
+		@competition_count=@competitions.count
 		if(params[:sort].to_s == 'competition_name')
 			 @competitions = @competitions.sort_by{|c| c.competition_name }
 		end
 	else
-		@judge = Judge.where("id"=>session[:user_id])[0]
+		@judge = Judge.where("id"=>session[:user_id],"year_id"=>params[:year_id])[0]
 		judge_comps = CompetitionsJudge.where("judge_id" => @judge.id)
 		comp_ids = Array.new
 		judge_comps.each do |j_c|
@@ -43,8 +43,9 @@ end
 def create
 	#render json: params[:round].inspect
 	@competition = Competition.new(competition_params)
+	@competition[:year_id]=params[:year_id]
 	if @competition.save
-	redirect_to competition_path(@competition)
+	redirect_to year_competition_path(params[:year_id],@competition)
 	else
 	render 'new'
 	end
@@ -62,9 +63,9 @@ def update
   else
     puts "inside else"
 	  @competition = Competition.find params[:id]
-	  @competition.update_attributes!(params[:competition].permit(:competition_name, :competition_des, :no_of_rounds))
+	  @competition.update_attributes!(params[:competition].permit(:competition_name, :competition_des, :no_of_rounds,:year_id))
 	  flash[:notice] = "#{@competition.competition_name} successfully updated."
-	  redirect_to competition_path(@competition)
+	  redirect_to year_competition_path(params[:year_id],@competition)
   end
 end
 
@@ -74,7 +75,7 @@ def destroy
 	#@competition = competition
 	@competition.destroy
 	flash[:notice] = "Competition '#{@competition.competition_name}' successfuly deleted'"
-	redirect_to competitions_path
+	redirect_to year_competitions_path(params[:year_id])
 end
 
 def add_part_to_round

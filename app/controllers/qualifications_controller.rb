@@ -10,7 +10,7 @@ def check_authentication
 
 end
 def qualifications_params
-	params.require(:qualifications).permit(:round_id, :participant_id)
+	params.require(:qualifications).permit(:round_id, :participant_id,:year_id)
 end
 
 
@@ -64,7 +64,7 @@ def create
 			flash[:warning] = "No participant to qualify"
 			@round = Round.find params[:first_round]
 			@competition = Competition.find params[:competition_id]
-			redirect_to new_competition_round_qualification_path(params[:competition_id], params[:round_id]) and return
+			redirect_to new_year_competition_round_qualification_path(params[:year_id],params[:competition_id], params[:round_id]) and return
 		else
 
 			old_qualifications.destroy_all
@@ -74,19 +74,20 @@ def create
 			params[:arr_part].each do |individual_part_id|
 				qual_params[:participant_number] = params[:participant_number][individual_part_id.to_s]
 				qual_params[:participant_id] = individual_part_id
+				qual_params[:year_id]=params[:year_id]
 				@qualification = Qualification.new(qual_params)
 				if @qualification.save
 					i=i+1
 				else
 					flash[:notice] = "random msg to idisplay message at correct place Add participant number"
-					redirect_to new_competition_round_qualification_path(params[:competition_id], params[:round_id] ) and return
+					redirect_to new_year_competition_round_qualification_path(params[:year_id],params[:competition_id], params[:round_id] ) and return
 				end
 				end
 			flash[:notice] = "Participants successfully added to rounds"
-			redirect_to competition_round_qualifications_path(competition[0],round[0])
+			redirect_to year_competition_round_qualifications_path(params[:year_id],competition[0],round[0])
 		end
 	else
-		redirect_to competition_path(competition[0])
+		redirect_to year_competition_path(params[:year_id],competition[0])
 	end
  
 end

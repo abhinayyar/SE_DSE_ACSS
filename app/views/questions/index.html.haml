@@ -5,9 +5,9 @@
 		= image_tag "logo.png", class: 'logo_button'
 		%ul
 			%li.current
-				= link_to 'Add Question', new_competition_round_question_path, class: 'menuitem'
+				= link_to 'Add Question', new_year_competition_round_question_path, class: 'menuitem'
       	
-	%a{:href => competitions_path}
+	%a{:href => year_competitions_path(params[:year_id])}
 		= image_tag "home.png", class: 'home_button'
 	.dropdown
 		%input.dropdown-toggle{:type => "text"}
@@ -40,10 +40,10 @@
 				%tr 
 					%td
 						= image_tag "questions.png", class: 'quest_but'  
-					%td.center{align: "center"}= link_to question.question_details, competition_round_question_path(params[:competition_id], params[:round_id], question),  class: 'custome_menu'
+					%td.center{align: "center"}= link_to question.question_details, year_competition_round_question_path(params[:year_id],params[:competition_id], params[:round_id], question),  class: 'custome_menu'
 					%td.center{align: "center"}= question.marks
 					%td
-						%a{:href => edit_competition_round_question_path(@competition, @round, question.id)}
+						%a{:href => edit_year_competition_round_question_path(params[:year_id],@competition, @round, question.id)}
 							= image_tag "edit.png", class: 'round_edit' 
 					%td
 						%a{:href => "#" }

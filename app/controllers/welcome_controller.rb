@@ -22,8 +22,7 @@ class WelcomeController < ApplicationController
 		        judge = Judge.where(:j_email => params[:cred][:email_id].downcase).first
 		        session[:user_id] = judge.id
 		      end
-		      redirect_to competitions_path
-		      #redirect_to years_path
+		      redirect_to years_path
 		else
 	
 		      flash[:notice] = "Invalid email/password combination"

@@ -35,8 +35,9 @@ def create
 	#render json: params[:round].inspect
 	@competition = Competition.find params[:competition_id]
 	@round = @competition.rounds.new(round_params)
+	@round[:year_id]=params[:year_id]
 	@round.save
-	redirect_to competition_round_path(@competition, @round)
+	redirect_to year_competition_round_path(params[:year_id],@competition, @round)
 end
 
 
@@ -52,7 +53,7 @@ def update
 	@round = @competition.rounds.find params[:id]
 	@round.update_attributes!(round_params)
 	flash[:notice] = "#{@round.round_name} successfully updated."
-  redirect_to competition_round_path(@competition, @round)
+  redirect_to year_competition_round_path(params[:year_id],@competition, @round)
 end
 
 def destroy
@@ -71,7 +72,7 @@ end
 #end
 private
 	def round_params
-    params.require(:round).permit(:round_name, :round_des, :no_of_participants)
+    params.require(:round).permit(:round_name, :round_des, :no_of_participants,:year_id)
 	end
 
 end
